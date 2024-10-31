@@ -31,6 +31,7 @@ class GalleryCategoryResource extends Resource
                 ->live(onBlur: true)
                 ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                 Forms\Components\TextInput::make('slug')
+                ->dehydrated()
                 ->disabled(),
                 Forms\Components\FileUpload::make('thumbnail'),
             ]);
