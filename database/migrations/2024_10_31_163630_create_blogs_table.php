@@ -20,8 +20,6 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->text('details')->nullable();
             $table->text('tags')->nullable();
-            $table->text('keywords')->nullable();
-            $table->text('meta_description')->nullable();
             $table->timestamps();
         });
     }
