@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Clusters\Gallery\Resources;
+namespace App\Filament\Clusters\Event\Resources;
 
-use App\Filament\Clusters\Gallery;
-use App\Filament\Clusters\Gallery\Resources\GalleryCategoryResource\Pages;
-use App\Filament\Clusters\Gallery\Resources\GalleryCategoryResource\RelationManagers;
-use App\Models\GalleryCategory;
+use App\Filament\Clusters\Event;
+use App\Filament\Clusters\Event\Resources\EventCategoryResource\Pages;
+use App\Filament\Clusters\Event\Resources\EventCategoryResource\RelationManagers;
+use App\Models\EventCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,12 +16,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Set;
 use Illuminate\Support\Str;
 
-class GalleryCategoryResource extends Resource
+class EventCategoryResource extends Resource
 {
-    protected static ?string $model = GalleryCategory::class;
+    protected static ?string $model = EventCategory::class;
 
+    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $cluster = Gallery::class;
+    protected static ?string $cluster = Event::class;
 
     public static function form(Form $form): Form
     {
@@ -45,7 +46,7 @@ class GalleryCategoryResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('thumbnail')
+                Tables\Columns\TextColumn::make('thumbnail')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -73,7 +74,7 @@ class GalleryCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageGalleryCategories::route('/'),
+            'index' => Pages\ManageEventCategories::route('/'),
         ];
     }
 }

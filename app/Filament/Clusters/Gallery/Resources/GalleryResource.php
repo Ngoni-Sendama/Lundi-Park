@@ -25,6 +25,8 @@ class GalleryResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('gallery_category_id')
+                ->relationship('category', 'name'),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->required(),
