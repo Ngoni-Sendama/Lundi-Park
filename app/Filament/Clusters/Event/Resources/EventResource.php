@@ -6,6 +6,7 @@ use App\Filament\Clusters\Event as EventCluster;
 use App\Filament\Clusters\Event\Resources\EventResource\Pages;
 use App\Filament\Clusters\Event\Resources\EventResource\RelationManagers;
 use App\Models\Event;
+use App\Models\EventCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,6 +14,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 class EventResource extends Resource
 {
@@ -26,16 +29,23 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('event_category_id')
+                Forms\Components\Select::make('event_category_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('slug'),
-                Forms\Components\TextInput::make('date'),
-                Forms\Components\FileUpload::make('thumbnail')->image(),
-                Forms\Components\Textarea::make('details')
+                    ->options(EventCategory::all()->pluck('name', 'id')),
+                Forms\Components\TextInput::make('name')
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+
+                Forms\Components\DateTimePicker::make('date')
+                ->seconds(false)
+                ->native(false),
+                Forms\Components\TextInput::make('slug')
+                ->dehydrated()
+                ->disabled(),
+                Forms\Components\FileUpload::make('thumbnail')->image()->columnSpanFull(),
+                Forms\Components\RichEditor::make('details')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('tags')
+                Forms\Components\TagsInput::make('tags')
                     ->columnSpanFull(),
             ]);
     }
