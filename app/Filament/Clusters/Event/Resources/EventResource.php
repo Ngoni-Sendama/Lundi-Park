@@ -39,9 +39,7 @@ class EventResource extends Resource
                 Forms\Components\DateTimePicker::make('date')
                 ->seconds(false)
                 ->native(false),
-                Forms\Components\TextInput::make('slug')
-                ->dehydrated()
-                ->disabled(),
+               
                 Forms\Components\FileUpload::make('thumbnail')->image()->columnSpanFull(),
                 Forms\Components\RichEditor::make('details')
                     ->columnSpanFull(),
@@ -54,15 +52,14 @@ class EventResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('event_category_id')
-                    ->numeric()
-                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('date')
                     ->searchable(),
+                    Tables\Columns\TextColumn::make('event_category.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('thumbnail')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
